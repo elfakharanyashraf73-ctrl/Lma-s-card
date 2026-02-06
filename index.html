@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lam's Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+NZ+Guides&family=Playwrite+NZ:wght@100..400&display=swap" rel="stylesheet">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+
+    <style>
+        :root {
+            --main-color: #ff9800; /* لون القطة البرتقالي */
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+        }
+
+        body {
+            font-family: 'Playwrite NZ', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            width: 90%;
+            max-width: 350px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-row {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 5px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: var(--main-color);
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .value {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            word-break: break-all;
+        }
+
+        /* تصميم القطة */
+        .cat-container {
+            position: fixed;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cat-head {
+            width: 120px;
+            height: 100px;
+            background: var(--main-color);
+            border-radius: 50% 50% 45% 45%;
+            position: relative;
+            transition: transform 0.5s ease;
+            border: 3px solid #000;
+        }
+
+        /* الأذنين */
+        .ear {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 40px solid var(--main-color);
+            position: absolute;
+            top: -25px;
+        }
+        .ear.left { left: 10px; transform: rotate(-15deg); }
+        .ear.right { right: 10px; transform: rotate(15deg); }
+
+        /* العينين */
+        .eye {
+            width: 12px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 40px;
+        }
+        .eye.left { left: 30px; }
+        .eye.right { right: 30px; }
+
+        /* الأنف والفم */
+        .nose {
+            width: 8px;
+            height: 5px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* تأثير الحركة عند الضغط */
+        .cat-container.active .cat-head {
+            transform: rotate(-10px) translateY(-5px);
+            animation: tilt 1s infinite alternate;
+        }
+
+        .cat-container.active .eye.right {
+            height: 2px;
+            top: 45px;
+            border-radius: 0;
+        }
+
+        @keyframes tilt {
+            from { transform: rotate(-10deg); }
+            to { transform: rotate(10deg); }
+        }
+
+        /* القلوب */
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            pointer-events: none;
+            animation: flyUp 1s forwards;
+            opacity: 0;
+        }
+
+        @keyframes flyUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="info-row">
+            <span class="label">Name:</span>
+            <span class="value">Lma Mohamed Elfakharany🎀</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Phone number 1:</span>
+            <span class="value">01116713837</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Phone number 2:</span>
+            <span class="value">01142661181</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Email:</span>
+            <span class="value">lmaelfakharany406@gmail.com</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Address:</span>
+            <span class="value">المعموره طريق الطبيه جنب مدرسه جولدن برج الزهراء </span> 
+        </div>
+    </div>
+
+    <div class="cat-container" id="cat">
+        <div class="cat-head">
+            <div class="ear left"></div>
+            <div class="ear right"></div>
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+            <div class="nose"></div>
+        </div>
+    </div>
+
+    <script>
+        const cat = document.getElementById('cat');
+        
+        cat.addEventListener('click', () => {
+            // تفعيل حركة الرأس والغمزة
+            cat.classList.add('active');
+            
+            // إنشاء قلوب
+            for(let i=0; i<5; i++) {
+                setTimeout(() => createHeart(), i * 200);
+            }
+
+            // إيقاف الحركة بعد فترة
+            setTimeout(() => {
+                cat.classList.remove('active');
+            }, 3000);
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart';
+            heart.style.left = (Math.random() * 60 + 20) + 'px';
+            cat.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
