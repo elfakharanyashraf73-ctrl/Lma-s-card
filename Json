@@ -1,0 +1,9 @@
+{
+  "name": "Lam's NFC Card",
+  "short_name": "Lma's Card",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff9800",
+  "description": "NFC Digital Card"
+}
